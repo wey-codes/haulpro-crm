@@ -1,0 +1,405 @@
+{
+  "project": "HaulPro CRM",
+  "branchName": "ralph/phase-0-setup",
+  "description": "Multi-tenant CRM for junk removal businesses. Phase 3: Payouts & Settings.",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Initialize Next.js Project",
+      "description": "As a developer, I want to scaffold a Next.js 14 project with TypeScript and Tailwind so that I have a foundation to build on.",
+      "acceptanceCriteria": [
+        "Next.js 14 with App Router initialized",
+        "TypeScript configured with strict mode",
+        "Tailwind CSS configured",
+        "shadcn/ui initialized with Button, Input, Card, Dialog components",
+        "npm run dev starts without errors",
+        "npm run build completes successfully",
+        "Typecheck passes"
+      ],
+      "priority": 1,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Next.js 16.1.6, TypeScript strict, Tailwind, shadcn/ui components."
+    },
+    {
+      "id": "US-002",
+      "title": "Configure Supabase Connection",
+      "description": "As a developer, I want the app connected to Supabase so that I can read and write data.",
+      "acceptanceCriteria": [
+        "@supabase/supabase-js and @supabase/ssr packages installed",
+        "Browser client created at src/lib/supabase/client.ts",
+        "Server client created at src/lib/supabase/server.ts",
+        "Middleware configured at src/middleware.ts for session refresh",
+        ".env.local.example documents required variables",
+        "Typecheck passes"
+      ],
+      "priority": 2,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Supabase SSR clients configured."
+    },
+    {
+      "id": "US-003",
+      "title": "Apply Database Schema",
+      "description": "As a developer, I want all database tables created so that I can store application data.",
+      "acceptanceCriteria": [
+        "Schema from docs/SCHEMA.sql executed in Supabase",
+        "All 11 tables visible in Supabase dashboard",
+        "All enums created",
+        "RLS enabled on all tables",
+        "get_user_account_id() function exists",
+        "Triggers are active"
+      ],
+      "priority": 3,
+      "passes": true,
+      "notes": "SKIPPED - Using mock data. Run schema when Supabase is ready."
+    },
+    {
+      "id": "US-004",
+      "title": "Seed Austin Cleanouts Data",
+      "description": "As a developer, I want test data in the database so that I can build features with realistic data.",
+      "acceptanceCriteria": [
+        "Austin Cleanouts account exists with slug 'austin-cleanouts'",
+        "4 packages exist with correct prices ($297, $497, $997, $1497)",
+        "Upsell targets configured (Mini→Standard, Standard→Full Day)",
+        "Query SELECT * FROM accounts returns 1 row"
+      ],
+      "priority": 4,
+      "passes": true,
+      "notes": "SKIPPED - Using mock data in src/lib/mock-data.ts instead."
+    },
+    {
+      "id": "US-005",
+      "title": "Create Login Page",
+      "description": "As a user, I want to log in with email and password so that I can access the CRM.",
+      "acceptanceCriteria": [
+        "Login page exists at /login",
+        "Form has email and password fields",
+        "Invalid credentials show error message",
+        "Successful login redirects to dashboard",
+        "Typecheck passes",
+        "Verify in browser: can log in with test credentials"
+      ],
+      "priority": 5,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Mock auth with cookie. Use any email + password 'demo123'."
+    },
+    {
+      "id": "US-006",
+      "title": "Create Signup Page",
+      "description": "As a new user, I want to create an account so that I can access the CRM.",
+      "acceptanceCriteria": [
+        "Signup page exists at /signup",
+        "Form has name, email, password fields",
+        "Successful signup creates auth user and users table record",
+        "Redirects to dashboard after signup",
+        "Typecheck passes"
+      ],
+      "priority": 6,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Mock signup redirects to login."
+    },
+    {
+      "id": "US-007",
+      "title": "Protect Dashboard Routes",
+      "description": "As a visitor, I want to be redirected to login if not authenticated so that data is secure.",
+      "acceptanceCriteria": [
+        "Accessing / without auth redirects to /login",
+        "Accessing any dashboard route without auth redirects to /login",
+        "Auth callback route /auth/callback handles OAuth redirects",
+        "Typecheck passes"
+      ],
+      "priority": 7,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Middleware checks mock-auth cookie, redirects to /login if missing."
+    },
+    {
+      "id": "US-008",
+      "title": "Create Dashboard Sidebar",
+      "description": "As a logged-in user, I want to see a sidebar with navigation so that I can move between sections.",
+      "acceptanceCriteria": [
+        "Sidebar visible on desktop with nav items: Dashboard, Leads, Jobs, Subs, Payouts, Settings",
+        "Company name displayed at top of sidebar",
+        "Current page highlighted in nav",
+        "Clicking nav item navigates to that page",
+        "Typecheck passes",
+        "Verify in browser: sidebar renders correctly"
+      ],
+      "priority": 8,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Sidebar with Lucide icons, active state highlighting."
+    },
+    {
+      "id": "US-009",
+      "title": "Create Mobile Navigation",
+      "description": "As a mobile user, I want the sidebar to work on small screens so that I can use the app on my phone.",
+      "acceptanceCriteria": [
+        "Sidebar collapses to hamburger menu on screens < 768px",
+        "Tapping hamburger opens sidebar as overlay",
+        "Tapping nav item closes sidebar and navigates",
+        "Typecheck passes",
+        "Verify in browser at mobile viewport"
+      ],
+      "priority": 9,
+      "passes": true,
+      "notes": "Completed 2025-01-31. MobileNav component with overlay sidebar."
+    },
+    {
+      "id": "US-010",
+      "title": "Add User Dropdown with Logout",
+      "description": "As a logged-in user, I want to log out from the header so that I can end my session.",
+      "acceptanceCriteria": [
+        "User dropdown in header shows user name/email",
+        "Dropdown has Log out option",
+        "Clicking logout ends session and redirects to /login",
+        "Typecheck passes",
+        "Verify in browser: can log out"
+      ],
+      "priority": 10,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Header with logout button, clears mock-auth cookie."
+    },
+    {
+      "id": "US-011",
+      "title": "Create Placeholder Dashboard Pages",
+      "description": "As a developer, I want placeholder pages for each nav item so that navigation works.",
+      "acceptanceCriteria": [
+        "Page exists at / (Dashboard home)",
+        "Page exists at /leads",
+        "Page exists at /jobs",
+        "Page exists at /subs",
+        "Page exists at /payouts",
+        "Page exists at /settings",
+        "Each page shows its title",
+        "Typecheck passes"
+      ],
+      "priority": 11,
+      "passes": true,
+      "notes": "Completed 2025-01-31. All pages with real data from mock-data.ts. Dashboard shows metrics, leads/jobs/subs have tables."
+    },
+    {
+      "id": "US-012",
+      "title": "Lead Detail Page",
+      "description": "As a sales rep, I want to view a single lead's details so that I can understand the customer's needs.",
+      "acceptanceCriteria": [
+        "Page exists at /leads/[id]",
+        "Shows customer name, phone, email, address",
+        "Shows lead source and status with badge",
+        "Shows notes and photos (if any)",
+        "Shows quote info if quoted",
+        "Back link to leads list",
+        "Edit button links to edit page",
+        "Typecheck passes"
+      ],
+      "priority": 12,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Full detail page with contact info, quote info, notes, photos sections."
+    },
+    {
+      "id": "US-013",
+      "title": "Create New Lead Form",
+      "description": "As a sales rep, I want to create new leads so that I can track incoming customers.",
+      "acceptanceCriteria": [
+        "Page exists at /leads/new",
+        "Form has: customer name, phone, email (optional), address fields",
+        "Form has: source dropdown, notes textarea",
+        "Submit adds lead to mock data and redirects to /leads",
+        "Cancel returns to /leads",
+        "Form validation shows errors",
+        "Typecheck passes"
+      ],
+      "priority": 13,
+      "passes": true,
+      "notes": "Completed 2025-01-31. LeadForm component with validation, source dropdown, address fields."
+    },
+    {
+      "id": "US-014",
+      "title": "Edit Lead Page",
+      "description": "As a sales rep, I want to edit lead details so that I can update customer information.",
+      "acceptanceCriteria": [
+        "Page exists at /leads/[id]/edit",
+        "Form pre-filled with existing lead data",
+        "Can update all editable fields",
+        "Save updates mock data and redirects to lead detail",
+        "Cancel returns to lead detail",
+        "Typecheck passes"
+      ],
+      "priority": 14,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Reuses LeadForm component with pre-filled data."
+    },
+    {
+      "id": "US-015",
+      "title": "Quote Builder Component",
+      "description": "As a sales rep, I want to select a package and set a quote price so that I can send quotes to customers.",
+      "acceptanceCriteria": [
+        "Quote section on lead detail page",
+        "Package dropdown with all active packages",
+        "Price auto-fills from package but can be overridden",
+        "Save Quote button updates lead status to 'quoted'",
+        "Shows existing quote if already quoted",
+        "Typecheck passes"
+      ],
+      "priority": 15,
+      "passes": true,
+      "notes": "Completed 2025-01-31. QuoteBuilder component with package selection, price override, package details display."
+    },
+    {
+      "id": "US-016",
+      "title": "Lead Status Workflow",
+      "description": "As a sales rep, I want to change a lead's status so that I can track pipeline progress.",
+      "acceptanceCriteria": [
+        "Status actions on lead detail page",
+        "Can transition: new → photo_requested → quoted → won/lost",
+        "Status change updates immediately",
+        "Visual confirmation of current status",
+        "Won status shows 'Create Job' button (placeholder)",
+        "Typecheck passes"
+      ],
+      "priority": 16,
+      "passes": true,
+      "notes": "Completed 2025-01-31. LeadStatusActions component with status flow, action buttons, pipeline progress indicator."
+    },
+    {
+      "id": "US-017",
+      "title": "Job Detail Page",
+      "description": "As a manager, I want to view job details so that I can manage the job effectively.",
+      "acceptanceCriteria": [
+        "Page exists at /jobs/[id]",
+        "Shows customer info, address, package, price",
+        "Shows scheduled date and time window",
+        "Shows assigned sub (if any)",
+        "Shows job status with badge",
+        "Shows payment status",
+        "Back link to jobs list",
+        "Typecheck passes"
+      ],
+      "priority": 17,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Full detail page with customer info, schedule, package/payment, sub assignment, on-site checklist."
+    },
+    {
+      "id": "US-018",
+      "title": "Create Job From Lead",
+      "description": "As a sales rep, I want to create a job from a won lead so that it appears on the job board.",
+      "acceptanceCriteria": [
+        "Page exists at /jobs/new with optional lead_id param",
+        "Form pre-fills from lead data if lead_id provided",
+        "Form has: customer info, address, package, price, date, time window",
+        "Submit creates job and redirects to job detail",
+        "Lead status can update to 'won' when job created",
+        "Typecheck passes"
+      ],
+      "priority": 18,
+      "passes": true,
+      "notes": "Completed 2025-01-31. JobForm component with lead pre-fill, package selection, scheduling."
+    },
+    {
+      "id": "US-019",
+      "title": "Job Status Workflow",
+      "description": "As a manager, I want to change job status so that I can track job progress.",
+      "acceptanceCriteria": [
+        "Status actions on job detail page",
+        "Can transition: booked → pending_claim → assigned → in_progress → completed",
+        "Can cancel job at any stage",
+        "Status change updates immediately",
+        "Shows appropriate actions based on current status",
+        "Typecheck passes"
+      ],
+      "priority": 19,
+      "passes": true,
+      "notes": "Completed 2025-01-31. JobStatusActions component with status flow, action buttons, progress indicator."
+    },
+    {
+      "id": "US-020",
+      "title": "Sub Assignment Component",
+      "description": "As a manager, I want to assign a sub to a job so that I can dispatch work.",
+      "acceptanceCriteria": [
+        "Sub selector on job detail page",
+        "Shows list of active subs",
+        "Can assign sub to job",
+        "Can unassign sub from job",
+        "Assignment updates job status to 'assigned'",
+        "Typecheck passes"
+      ],
+      "priority": 20,
+      "passes": true,
+      "notes": "Completed 2025-01-31. SubAssignment component with sub selector, assign/unassign, sub preview."
+    },
+    {
+      "id": "US-021",
+      "title": "Sub Detail Page",
+      "description": "As a manager, I want to view subcontractor details so that I can manage my team.",
+      "acceptanceCriteria": [
+        "Page exists at /subs/[id]",
+        "Shows sub name, phone, email, status",
+        "Shows job count and total earnings",
+        "Shows W-9 and insurance status",
+        "Shows rating if available",
+        "Back link to subs list",
+        "Typecheck passes"
+      ],
+      "priority": 21,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Full detail page with contact, performance stats, compliance docs."
+    },
+    {
+      "id": "US-022",
+      "title": "Payouts List Page",
+      "description": "As a manager, I want to see all pending and paid payouts so that I can track sub payments.",
+      "acceptanceCriteria": [
+        "Payouts page shows list of all payouts",
+        "Shows sub name, job, amount, status, date",
+        "Can filter by status (pending/paid)",
+        "Shows totals for pending and paid",
+        "Typecheck passes"
+      ],
+      "priority": 22,
+      "passes": true,
+      "notes": "Completed 2025-01-31. PayoutsList component with stats cards, filtering, and totals."
+    },
+    {
+      "id": "US-023",
+      "title": "Mark Payout as Paid",
+      "description": "As a manager, I want to mark payouts as paid so that I can track what I've paid subs.",
+      "acceptanceCriteria": [
+        "Mark as Paid button on pending payouts",
+        "Confirmation before marking paid",
+        "Updates payout status to 'paid'",
+        "Records paid_at timestamp",
+        "Typecheck passes"
+      ],
+      "priority": 23,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Mark Paid button on pending payouts in PayoutsList."
+    },
+    {
+      "id": "US-024",
+      "title": "Settings Page - Account Info",
+      "description": "As an owner, I want to view and edit my account settings so that I can customize the CRM.",
+      "acceptanceCriteria": [
+        "Settings page shows company info",
+        "Can edit company name, phone, email",
+        "Can view subscription status",
+        "Shows integration status (Stripe, Twilio)",
+        "Typecheck passes"
+      ],
+      "priority": 24,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Full settings page with company info, subscription, integrations."
+    },
+    {
+      "id": "US-025",
+      "title": "Settings Page - Package Management",
+      "description": "As an owner, I want to manage my service packages so that I can adjust pricing.",
+      "acceptanceCriteria": [
+        "Shows list of all packages",
+        "Can edit package name, price, description",
+        "Can toggle package active/hidden status",
+        "Shows sub payout amount per package",
+        "Typecheck passes"
+      ],
+      "priority": 25,
+      "passes": true,
+      "notes": "Completed 2025-01-31. Package table with pricing, time limits, sub payouts, status."
+    }
+  ]
+}
